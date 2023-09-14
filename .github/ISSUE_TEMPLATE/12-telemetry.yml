@@ -1,0 +1,80 @@
+name: Go telemetry proposal
+description: New telemetry counter or update on an existing one
+title: "telemetry: "
+labels: ["Telemetry-Proposal"]
+projects: ["hyangah/123"]
+body:
+- type: textarea
+  attributes:
+    label: Why?
+    description: Why do we need to collect this info using telemetry?
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Privacy
+    description: Does it carry sensitive user information?
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: How?
+    description: How do we plan to compute the info? Attach code location or cl if available.
+  validations:
+    required: true
+- type: markdown
+  attributes:
+    value: |
+      Approved telemetry counters are maintained as the [Go Telemetry Graphconfig](https://golang.org/x/telemetry/internal/graphconfig) records.
+      Please fill out the fields necessary to populate the record.
+      You can check the list of the approved counters and their current configuration in [config.txt](https://go.googlesource.com/telemetry/+/master/internal/configgen/config.txt).    
+- type: input
+  attributes:
+    label: title
+    description: The graph title
+    placeholder: Editor Distribution
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: description
+    description: Longer description of the graph
+  validations:
+    required: false
+- type: dropdown
+  id: type
+  attributes:
+    label: type
+    description: The graph type. For stack type, must specify the depth.
+    options:
+      - partition
+      - histogram
+      - stack
+  validations:
+    required: true
+- type: input
+  attributes:
+    label: program
+    description: The main package path of the program for which this graph applies.
+    placeholder: golang.org/x/tools/gopls
+  validations:
+    required: true
+- type: input
+  attributes:
+    label: counter
+    description: The primary counter name, including buckets for histogram and partition type.
+  validations:
+    required: true
+- type: input
+  attributes:
+    label: depth
+    description: If type is 'stack', specify the max stack depth.
+    placeholder: '16'
+  validations:
+    required: false
+- type: input
+  attributes:
+    label: version
+    description: The first version for which this graph applies. Must be a valid semver value.
+  validations:
+    required: true
