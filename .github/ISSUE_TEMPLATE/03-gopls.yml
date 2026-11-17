@@ -69,3 +69,45 @@ body:
       description: "If possible please include gopls logs. Instructions for capturing them can be found here: https://github.com/golang/tools/blob/master/gopls/doc/troubleshooting.md#capture-logs"
     validations:
       required: false
+  - type: dropdown
+    id: discovery
+    attributes:
+      label: "How did you discover this issue?"
+      options:
+        - "Code inspection or AI/LLM audit (not hit in practice)"
+        - "Feature request or documentation issue"
+        - "Fuzzing or automated testing"
+        - "While testing or upgrading gopls / Go"
+        - "In daily editor use on a real project"
+      default: 0
+    validations:
+      required: true
+  - type: dropdown
+    id: impact
+    attributes:
+      label: "Are you blocked by this issue?"
+      options:
+        - "Not affected — theoretical issue, documentation fix, or feature request"
+        - "Minor — low impact or edge case"
+        - "Impaired — hitting this in practice, but have a workaround"
+        - "Blocked — cannot proceed, no reasonable workaround"
+      default: 0
+    validations:
+      required: true
+  - type: textarea
+    id: impact-details
+    attributes:
+      label: "Discovery and impact details"
+      description: |
+        Briefly share how you encountered and narrowed down this issue, how it affects your workflow, and any workaround you are using.
+        If you have not hit this in practice (for example, found by reading code or with an AI/LLM tool), mention the method/tool used or leave blank—do not speculate on hypothetical impact.
+      placeholder: "ex. Hit while editing a 200-package workspace; narrowed down to the minimal reproducer above. Workaround: restarting gopls."
+    validations:
+      required: false
+  - type: checkboxes
+    id: verification
+    attributes:
+      label: "Verification"
+      options:
+        - label: "I personally verified the behavior or details reported above (unverified AI/LLM-generated reports will be closed)."
+          required: true

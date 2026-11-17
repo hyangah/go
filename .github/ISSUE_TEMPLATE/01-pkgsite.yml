@@ -16,9 +16,9 @@ body:
     id: user-agent
     attributes:
       label: "What is your user agent?"
-      description: "You can find your user agent here: https://www.google.com/search?q=what+is+my+user+agent"
+      description: "Include if reporting a browser or layout issue: https://www.google.com/search?q=what+is+my+user+agent"
     validations:
-      required: true
+      required: false
   - type: textarea
     id: screenshot
     attributes:
@@ -43,5 +43,26 @@ body:
     id: expected-behavior
     attributes:
       label: "What did you expect to see?"
+    validations:
+      required: true
+  - type: dropdown
+    id: impact
+    attributes:
+      label: "Are you blocked by this issue?"
+      options:
+        - "Not affected — theoretical issue, documentation fix, or feature request"
+        - "Minor — low impact or edge case"
+        - "Impaired — hitting this in practice, but have a workaround"
+        - "Blocked — cannot proceed, no reasonable workaround"
+      default: 0
+    validations:
+      required: true
+  - type: textarea
+    id: impact-details
+    attributes:
+      label: "Impact and urgency justification"
+      description: |
+        Explain how this affects your workflow or users, and what workaround (if any) you are using.
+        If reporting a feature request or minor UI issue, write "N/A".
     validations:
       required: true

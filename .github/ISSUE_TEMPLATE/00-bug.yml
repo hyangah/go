@@ -15,10 +15,10 @@ body:
     attributes:
       label: Go version
       description: |
-        What version of Go are you using (`go version`)?
+        What version of Go are you using (`go version`)? Write "N/A" for website or documentation issues.
 
         Note: we only [support](https://go.dev/doc/devel/release#policy) the two most recent major releases.
-      placeholder: ex. go version go1.20.7 darwin/arm64
+      placeholder: ex. go version go1.27.4 darwin/arm64
     validations:
       required: true
 
@@ -26,6 +26,7 @@ body:
     id: go-env
     attributes:
       label: "Output of `go env` in your module/workspace:"
+      description: Include if relevant (for example, `cmd/go`, build, `cgo`, or OS-specific issues).
       placeholder: |
         GO111MODULE=""
         GOARCH="arm64"
@@ -50,7 +51,7 @@ body:
         GOTMPDIR=""
         GOTOOLDIR="/usr/local/go/pkg/tool/darwin_arm64"
         GOVCS=""
-        GOVERSION="go1.20.7"
+        GOVERSION="go1.27.4"
         GCCGO="gccgo"
         AR="ar"
         CC="clang"
@@ -67,7 +68,7 @@ body:
         GOGCCFLAGS="-fPIC -arch arm64 -pthread -fno-caret-diagnostics -Qunused-arguments -fmessage-length=0 -fdebug-prefix-map=/var/folders/44/nbbyll_10jd0z8rj_qxm43740000gn/T/go-build2331607515=/tmp/go-build -gno-record-gcc-switches -fno-common"
       render: shell
     validations:
-      required: true
+      required: false
 
   - type: textarea
     id: what-did-you-do
@@ -93,10 +94,48 @@ body:
     validations:
       required: true
 
-  - type: textarea
+  - type: dropdown
     id: discovery
     attributes:
       label: "How did you discover this issue?"
-      description: For example, did this issue occur in your production application? Alternatively, did you find this issue via inspection or fuzzing of the source code?
+      options:
+        - "Code inspection or AI/LLM audit (not hit in practice)"
+        - "Feature request or documentation issue"
+        - "Fuzzing or automated testing"
+        - "While developing, testing, or upgrading Go"
+        - "In a production or real-world application"
+      default: 0
     validations:
       required: true
+
+  - type: dropdown
+    id: impact
+    attributes:
+      label: "Are you blocked by this issue?"
+      options:
+        - "Not affected — theoretical issue, documentation fix, or feature request"
+        - "Minor — low impact or edge case"
+        - "Impaired — hitting this in practice, but have a workaround"
+        - "Blocked — cannot proceed, no reasonable workaround"
+      default: 0
+    validations:
+      required: true
+
+  - type: textarea
+    id: impact-details
+    attributes:
+      label: "Discovery and impact details"
+      description: |
+        Briefly share how you encountered and narrowed down this issue, how it affects your project, and any workaround you are using.
+        If you have not hit this in practice (for example, found by reading code or with an AI/LLM tool), mention the method/tool used or leave blank—do not speculate on hypothetical impact.
+      placeholder: "ex. Hit in production (goroutines stuck in Write for days); narrowed down with a debugger into the standalone reproducer above. Workaround: ..."
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: verification
+    attributes:
+      label: "Verification"
+      options:
+        - label: "I personally verified the behavior or details reported above (unverified AI/LLM-generated reports will be closed)."
+          required: true

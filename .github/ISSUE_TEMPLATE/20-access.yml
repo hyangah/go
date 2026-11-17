@@ -1,0 +1,36 @@
+name: Gerrit, Wiki, or Builder Access Requests
+description: Request TryBot, approver, wiki, or gomote access for Go contributors
+title: "access: group or tool name"
+labels: ["Access"]
+body:
+  - type: markdown
+    attributes:
+      value: "Before submitting, please review the eligibility guidelines at [go.dev/wiki/GerritAccess](https://go.dev/wiki/GerritAccess) (or [go.dev/wiki/Gomote](https://go.dev/wiki/Gomote))."
+  - type: dropdown
+    id: access-type
+    attributes:
+      label: "Access type"
+      description: "Select all that apply."
+      multiple: true
+      options:
+        - "Gerrit TryBot access (may-start-trybots)"
+        - "Go Wiki access (wiki-approvers)"
+        - "Gomote access"
+        - "Gerrit approver access (approvers)"
+    validations:
+      required: true
+  - type: input
+    id: gerrit-account
+    attributes:
+      label: "Gerrit account"
+      description: "The Google account email used on go-review.googlesource.com, or a link to your Gerrit changes."
+      placeholder: "ex. https://go-review.googlesource.com/q/author:gopher@example.com"
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: "Contribution context"
+      description: "Briefly describe your Go contribution history (or nomination details if requesting on someone else's behalf)."
+    validations:
+      required: true

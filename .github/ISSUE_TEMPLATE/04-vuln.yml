@@ -10,27 +10,33 @@ body:
     id: govulncheck-version
     attributes:
       label: govulncheck version
-      description: What version of govulncheck are you using (`govulncheck -version`)?
+      description: What version of govulncheck are you using (`govulncheck -version`)? Write "N/A" for feature requests.
       placeholder: |
-        Go: devel go1.22-0262ea1ff9 Thu Oct 26 18:46:50 2023 +0000
-        Scanner: govulncheck@v1.0.2-0.20231108200754-fcf7dff7b242
+        Go: go1.27.4
+        Scanner: govulncheck@v1.1.4
         DB: https://vuln.go.dev
-        DB updated: 2023-11-21 15:39:17 +0000 UTC
+        DB updated: 2026-11-01 15:39:17 +0000 UTC
     validations:
       required: true
-  - type: textarea
+  - type: dropdown
     id: reproduce-latest-version
     attributes:
       label: "Does this issue reproduce at the latest version of golang.org/x/vuln?"
+      options:
+        - "N/A (feature request)"
+        - "No"
+        - "Yes"
+      default: 0
     validations:
       required: true
   - type: textarea
     id: go-env
     attributes:
       label: "Output of `go env` in your module/workspace:"
+      description: "Include if relevant."
       render: shell
     validations:
-      required: true
+      required: false
   - type: textarea
     id: what-did-you-do
     attributes:
@@ -50,3 +56,45 @@ body:
       label: "What did you expect to see?"
     validations:
       required: true
+  - type: dropdown
+    id: discovery
+    attributes:
+      label: "How did you discover this issue?"
+      options:
+        - "Code inspection or AI/LLM audit (not hit in practice)"
+        - "Feature request or documentation issue"
+        - "Fuzzing or automated testing"
+        - "While developing, testing, or upgrading"
+        - "In a production or real-world application / CI pipeline"
+      default: 0
+    validations:
+      required: true
+  - type: dropdown
+    id: impact
+    attributes:
+      label: "Are you blocked by this issue?"
+      options:
+        - "Not affected — theoretical issue, documentation fix, or feature request"
+        - "Minor — low impact or edge case"
+        - "Impaired — hitting this in practice, but have a workaround"
+        - "Blocked — cannot proceed, no reasonable workaround"
+      default: 0
+    validations:
+      required: true
+  - type: textarea
+    id: impact-details
+    attributes:
+      label: "Discovery and impact details"
+      description: |
+        Briefly share how you encountered and narrowed down this issue, how it affects your project or workflow, and any workaround you are using.
+        If you have not hit this in practice (for example, found by reading code or with an AI/LLM tool), mention the method/tool used or leave blank—do not speculate on hypothetical impact.
+      placeholder: "ex. Hit in CI govulncheck job after upgrading Go; narrowed down to the minimal module above. Workaround: ..."
+    validations:
+      required: false
+  - type: checkboxes
+    id: verification
+    attributes:
+      label: "Verification"
+      options:
+        - label: "I personally verified the behavior or details reported above (unverified AI/LLM-generated reports will be closed)."
+          required: true
